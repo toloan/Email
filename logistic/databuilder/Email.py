@@ -13,11 +13,11 @@ class Email:
         if "spm" in file.name:
             self.type=1
         else:
-            self.type=0    
+            self.type=-1    
 
     def get_list(self):
         self.content=self.content.lower()
-        words = re.sub(r'[.!,;?"#$%&\'()*+-/@\\]', ' ', self.content).split()
+        words = re.sub(r'[.!,;?"#$%&\'()*+-/@\\><:{}^=|/~]', ' ', self.content).split()
         words=list(set(words))
         words=[word for word in words if word.isdigit()==False]
         return words
