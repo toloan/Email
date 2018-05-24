@@ -61,14 +61,38 @@ test_x=numpy.asarray(test_x)
 test_y=numpy.asarray(test_y)
 n_test =test_x.shape[0]
 learning_time = time.time()
+predict=[]
+precise_ham_sum=0
+precise_spam_sum=0
+precise_ham=0
+precise_spam=0
+recall_ham = 0
+recall_spam = 0
 for (x,y) in zip(test_x,test_y):
 	#print(y)
-	#print(w.T@x+b)
-	if y*(w.T@x+b) >= 0:
+	#print()
+	if y==1:
+		recall_spam =recall_spam+ 1
+	else:
+		recall_ham = recall_ham + 1
+	p=w.T@x+b
+	if p >= 0: 
+		precise_spam_sum = precise_spam_sum+1
+	else:
+		precise_ham_sum = precise_ham_sum + 1
+	if  p*y>= 0:
 		check = check + 1
+		if p>=0:
+			precise_spam = precise_spam +1
+		else: 
+			precise_ham = precise_ham+1
 print("return time : ",time.time()-learning_time)
 print(check)
 print(n_test)
-print("result: ",check/n_test)
+print("accuracy: ",check/n_test)
+print("precision: ", precise_spam/precise_spam_sum, " ", precise_ham/precise_ham_sum)
+print("recall:", precise_spam/recall_spam, " ", precise_ham/recall_ham)
+
+
 
 
